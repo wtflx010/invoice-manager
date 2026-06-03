@@ -25,6 +25,9 @@ def main():
         }))
         sys.exit(1)
 
+    # Set mirror for model download
+    os.environ.setdefault('HF_ENDPOINT', 'https://hf-mirror.com')
+
     ext = os.path.splitext(file_path)[1].lower()
     img_paths = []
     temp_dir = None

@@ -178,11 +178,18 @@ def main():
         try:
             from paddleocr import PaddleOCR
             import os
+            # Use mirror for model download if default source is unreachable
             os.environ['DISABLE_MODEL_SOURCE_CHECK'] = 'True'
+            # Try to set model download mirror (HuggingFace mirror for China)
+            os.environ.setdefault('HF_ENDPOINT', 'https://hf-mirror.com')
             ocr = PaddleOCR(lang='ch', use_angle_cls=True)
             steps.append({'step': 'model_download', 'status': 'completed'})
         except Exception as e:
-            steps.append({'step': 'model_download', 'status': 'failed', 'error': str(e)[:200]})
+            error_msg = str(e)[:300]
+            # If JSON parse error, it's likely a network/proxy issue returning HTML
+            if 'not valid JSON' in error_msg or 'Unexpected token' in error_msg:
+                error_msg = '模型下载失败：网络问题导致下载源返回了错误页面。请检查网络连接后重试，或尝试设置代理。'
+            steps.append({'step': 'model_download', 'status': 'failed', 'error': error_msg})
             all_ok = False
 
     print(json.dumps({
