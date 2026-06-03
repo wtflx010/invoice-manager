@@ -52,7 +52,7 @@ def main():
             print(json.dumps({'success': False, 'error': 'No images to process'}))
             sys.exit(1)
 
-        ocr = PaddleOCR(lang='ch', use_angle_cls=True, show_log=False)
+        ocr = PaddleOCR(lang='ch', use_angle_cls=True)
 
         all_lines = []
         all_text_parts = []

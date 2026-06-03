@@ -179,7 +179,7 @@ def main():
             from paddleocr import PaddleOCR
             import os
             os.environ['DISABLE_MODEL_SOURCE_CHECK'] = 'True'
-            ocr = PaddleOCR(lang='ch', use_angle_cls=True, show_log=False)
+            ocr = PaddleOCR(lang='ch', use_angle_cls=True)
             steps.append({'step': 'model_download', 'status': 'completed'})
         except Exception as e:
             steps.append({'step': 'model_download', 'status': 'failed', 'error': str(e)[:200]})
