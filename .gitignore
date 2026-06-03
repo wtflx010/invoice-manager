@@ -1,0 +1,9 @@
+node_modules/
+out/
+release/
+dist/
+*.dmg
+*.blockmap
+.DS_Store
+*.log
+.env
