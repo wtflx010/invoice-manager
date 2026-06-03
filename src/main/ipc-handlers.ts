@@ -893,7 +893,11 @@ export function registerIpcHandlers(): void {
       if (result.success) {
         return { success: true, version: 'PaddleOCR', steps: result.steps }
       }
-      return { success: false, error: '安装失败，请查看日志', steps: result.steps }
+      // Extract error details from steps
+      const steps = (result.steps as Array<Record<string, unknown>>) || []
+      const failedSteps = steps.filter(s => s.status === 'failed')
+      const errorDetail = failedSteps.map(s => `${s.step}: ${s.error || '未知错误'}`).join('; ')
+      return { success: false, error: errorDetail || '安装失败', steps: result.steps }
     } catch (err) {
       return { success: false, error: err instanceof Error ? err.message : String(err) }
     }

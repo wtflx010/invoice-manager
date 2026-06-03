@@ -3,6 +3,8 @@ declare module '*.png' {
   export default value
 }
 
+declare const __APP_VERSION__: string
+
 declare module '*.jpg' {
   const value: string
   export default value

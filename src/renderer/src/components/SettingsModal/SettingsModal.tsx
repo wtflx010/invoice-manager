@@ -73,8 +73,9 @@ export default function SettingsModal() {
   const [updateInfo, setUpdateInfo] = useState<{ version: string; releaseNotes?: string } | null>(null)
   const [downloadProgress, setDownloadProgress] = useState(0)
   const [appVersion] = useState(() => {
-    const el = document.querySelector('meta[name="app-version"]')
-    return el?.getAttribute('content') || '1.0.0'
+    return (typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : null) ||
+      document.querySelector('meta[name="app-version"]')?.getAttribute('content') ||
+      '1.0.0'
   })
 
   useEffect(() => {
